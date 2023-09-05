@@ -1,40 +1,39 @@
-const MiniCssExtractPlugin = require("mini-css-extract-plugin"),
-    TerserPlugin = require("terser-webpack-plugin"),
-    path = require("path"),
-    common = require("./webpack.common.js");
-    const { merge } = require("webpack-merge"),
-    CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+// Generated using webpack-cli https://github.com/webpack/webpack-cli
 
-module.exports = merge(common, {
-    mode: "production",
-    devtool: "hidden-source-map",
+const webpack = require('webpack');
+const path = require('path');
+
+const config = {
+    entry: './src/index.js',
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+    },
+    devServer: {
+        open: true,
+        host: 'localhost',
+    },
+    plugins: [
+        // Add your plugins here
+        // Learn more about plugins from https://webpack.js.org/configuration/plugins/
+    ],
     module: {
         rules: [
             {
-                test: /\.s[ac]ss$/i,
-                use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
+                test: /\.(js|jsx)$/i,
+                loader: 'babel-loader',
             },
-        ]
-    },
-    output: {
-        filename: 'bundle.[contenthash].js',
-        path: path.resolve(__dirname, 'dist'),
-        libraryTarget: 'var',
-        library: 'Client',
-        clean: true,
-    },
-    optimization: {
-        minimize: true,
-        minimizer: [
-            // For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`), uncomment the next line
-            // `...`,
-            new CssMinimizerPlugin(),
-            new TerserPlugin()
+            {
+                test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
+                type: 'asset',
+            },
+
+            // Add your rules for custom modules here
+            // Learn more about loaders from https://webpack.js.org/loaders/
         ],
     },
-    plugins: [
-        new MiniCssExtractPlugin({
-            filename: 'style.[contenthash].css'
-        })
-    ]
-})
+};
+
+module.exports = {
+    mode: 'production'
+
+};
